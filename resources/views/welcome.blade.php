@@ -10,6 +10,7 @@
     </head>
     <body>
         <div id="app">
+            <find-user></find-user>
             <users-component></users-component>
         </div>
     </body>

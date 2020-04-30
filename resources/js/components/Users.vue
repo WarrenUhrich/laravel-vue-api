@@ -26,6 +26,12 @@
     // Runs when the component is first set up!
     mounted ()
     {
+      axios.get( '/laravel-vue-api/public/api/users' )
+        .then( response => {
+          // console.log( response );
+          this.users = response.data;
+        } )
+      /*
       // AJAX request for users.
       fetch( '/laravel-vue-api/public/api/users' )
         // Convert users data to a JS object.
@@ -34,6 +40,7 @@
         .then( data => {
           this.users = data;
         } )
+      */
     }
   }
 </script>
