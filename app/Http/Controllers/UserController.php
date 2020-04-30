@@ -19,9 +19,21 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Retrieve ALL the users.
+     */
     public function fetchAll ()
     {
         $users = User::all();
         return $users;
+    }
+
+    /**
+     * Retrieve ONE user (by ID.)
+     */
+    public function fetchOne ( Request $request, $id )
+    {
+        $user = User::findOrFail( $id );
+        return $user;
     }
 }

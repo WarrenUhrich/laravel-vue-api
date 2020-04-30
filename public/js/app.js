@@ -1934,8 +1934,33 @@ __webpack_require__.r(__webpack_exports__);
   name: 'find-user',
   data: function data() {
     return {
+      userId: '',
       user: false
     };
+  },
+  methods: {
+    search: function search(event) {
+      var _this = this;
+
+      // Make sure our form doesn't refresh the page.
+      event.preventDefault(); // Convert user ID from string/float to integer.
+
+      var userId = parseInt(this.userId); // Search for the user. // NOTE: ${} syntax is a "template literal."
+
+      axios.get("/laravel-vue-api/public/api/user/".concat(userId)).then(function (response) {
+        // console.log( response );
+        // Get the user from the response.
+        var user = response.data; // Store the user in our data.
+
+        _this.user = user;
+      })["catch"](function (error) {
+        // CATCH is used for a request FAILURE.
+        // The user wasn't found; so set our data to false!
+        _this.user = false; // Output the error message to console log for easy debugging.
+
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -37643,7 +37668,37 @@ var render = function() {
   return _c("section", [
     _c("h2", [_vm._v("Find a User by ID")]),
     _vm._v(" "),
-    _vm._m(0),
+    _c(
+      "form",
+      { attrs: { action: "#", method: "GET" }, on: { submit: _vm.search } },
+      [
+        _c("label", { attrs: { for: "id" } }, [
+          _vm._v("\n      User ID:\n      "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.userId,
+                expression: "userId"
+              }
+            ],
+            attrs: { type: "number", name: "id", id: "id" },
+            domProps: { value: _vm.userId },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.userId = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("input", { attrs: { type: "submit", value: "Find User" } })
+      ]
+    ),
     _vm._v(" "),
     _vm.user
       ? _c("dl", [
@@ -37658,21 +37713,7 @@ var render = function() {
       : _c("p", [_vm._v("\n    User not found.\n  ")])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { attrs: { action: "#", method: "GET" } }, [
-      _c("label", { attrs: { for: "id" } }, [
-        _vm._v("\n      User ID:\n      "),
-        _c("input", { attrs: { type: "number", name: "id", id: "id" } })
-      ]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "submit", value: "Find User" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
