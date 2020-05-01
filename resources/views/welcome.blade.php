@@ -11,6 +11,7 @@
     <body>
         <div id="app">
             <find-user></find-user>
+            <update-user-name></update-user-name>
             <users-component></users-component>
         </div>
     </body>

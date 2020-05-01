@@ -36,4 +36,19 @@ class UserController extends Controller
         $user = User::findOrFail( $id );
         return $user;
     }
+
+    /**
+     * Update a user's name.
+     */
+    public function updateUserName ( Request $request, $id )
+    {
+        // Retrieve the user.
+        $user = User::findOrFail( $id );
+        // Update their name.
+        $user->name = $request->name;
+        // Save the changes to the database.
+        $user->save();
+        // Return success (the updated user.)
+        return $user;
+    }
 }
